@@ -3,65 +3,30 @@
 <head>
   <title>Thunder AI</title>
   <style>
-    /* Full-screen animated sunset gradient background */
+    /* Full-screen vivid sunset gradient background */
     body {
       margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: "Courier New", monospace;
-      background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fcb69f);
-      background-size: 300% 300%;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff6a00, #ff2e63, #8e2de2, #4a00e0);
+      background-size: 400% 400%;
+      animation: sunsetLoop 16s ease infinite, fadeIn 1.5s ease forwards;
       opacity: 0;
-      animation: bootIn 2s ease forwards, sunsetMove 12s ease infinite;
       overflow: hidden;
     }
 
-    @keyframes sunsetMove {
+    @keyframes sunsetLoop {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Boot-in animation */
-    @keyframes bootIn {
-      0% { opacity: 0; filter: blur(20px); transform: scale(1.05); }
-      40% { opacity: 0.4; filter: blur(10px); }
-      70% { opacity: 0.8; filter: blur(4px); }
-      100% { opacity: 1; filter: blur(0px); transform: scale(1); }
-    }
-
-    /* Terminal boot text container */
-    #terminal {
-      position: absolute;
-      top: 40px;
-      left: 40px;
-      color: white;
-      font-size: 18px;
-      white-space: pre-line;
-      opacity: 0;
-      animation: fadeInTerminal 1.5s ease forwards 0.8s;
-      text-shadow: 0 0 8px rgba(255,255,255,0.6);
-    }
-
-    @keyframes fadeInTerminal {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Glitch effect */
-    .glitch {
-      animation: glitchAnim 0.35s linear 1.2s 1;
-    }
-
-    @keyframes glitchAnim {
-      0% { transform: translate(0); }
-      20% { transform: translate(-3px, 2px); }
-      40% { transform: translate(3px, -2px); }
-      60% { transform: translate(-2px, 1px); }
-      80% { transform: translate(2px, -1px); }
-      100% { transform: translate(0); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Aura + button container */
@@ -70,7 +35,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: fadeInButton 2.8s ease forwards;
+      animation: fadeInButton 2.2s ease forwards;
       opacity: 0;
     }
 
@@ -121,7 +86,6 @@
       z-index: 2;
     }
 
-    /* Hologram gradient overlay */
     .btn::before {
       content: "";
       position: absolute;
@@ -156,49 +120,9 @@
 </head>
 
 <body>
-
-  <!-- Terminal Boot Text -->
-  <div id="terminal" class="glitch"></div>
-
-  <!-- Aura + Button -->
   <div class="aura-container">
     <div class="aura"></div>
     <a href="https://thunder-ai-ccfaa141.base44.app/" class="btn">Open Thunder AI</a>
   </div>
-
-  <script>
-    /* Terminal typing effect */
-    const terminal = document.getElementById("terminal");
-
-    const lines = [
-      "Initializing Thunder AI Systems...",
-      "Loading neural modules...",
-      "Establishing secure connection...",
-      "Boot sequence complete.",
-      "",
-      ">> System Ready"
-    ];
-
-    let index = 0;
-    let charIndex = 0;
-
-    function typeLine() {
-      if (index < lines.length) {
-        if (charIndex < lines[index].length) {
-          terminal.textContent += lines[index][charIndex];
-          charIndex++;
-          setTimeout(typeLine, 40);
-        } else {
-          terminal.textContent += "\n";
-          index++;
-          charIndex = 0;
-          setTimeout(typeLine, 150);
-        }
-      }
-    }
-
-    setTimeout(typeLine, 900);
-  </script>
-
 </body>
 </html>
