@@ -3,47 +3,202 @@
 <head>
   <title>Thunder AI</title>
   <style>
+    /* Full-screen animated sunset gradient background */
     body {
       margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #0d0f1a;
-      font-family: Arial, sans-serif;
-    }
-
-    .btn {
-      padding: 18px 40px;
-      font-size: 22px;
-      color: white;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(90deg, #4a00e0, #8e2de2, #4a00e0);
+      font-family: "Courier New", monospace;
+      background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fcb69f);
       background-size: 300% 300%;
-      animation: gradientMove 4s infinite linear;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      opacity: 0;
+      animation: bootIn 2s ease forwards, sunsetMove 12s ease infinite;
+      overflow: hidden;
     }
 
-    .btn:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55);
-    }
-
-    @keyframes gradientMove {
+    @keyframes sunsetMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    /* Boot-in animation */
+    @keyframes bootIn {
+      0% { opacity: 0; filter: blur(20px); transform: scale(1.05); }
+      40% { opacity: 0.4; filter: blur(10px); }
+      70% { opacity: 0.8; filter: blur(4px); }
+      100% { opacity: 1; filter: blur(0px); transform: scale(1); }
+    }
+
+    /* Terminal boot text container */
+    #terminal {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      color: white;
+      font-size: 18px;
+      white-space: pre-line;
+      opacity: 0;
+      animation: fadeInTerminal 1.5s ease forwards 0.8s;
+      text-shadow: 0 0 8px rgba(255,255,255,0.6);
+    }
+
+    @keyframes fadeInTerminal {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Glitch effect */
+    .glitch {
+      animation: glitchAnim 0.35s linear 1.2s 1;
+    }
+
+    @keyframes glitchAnim {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 2px); }
+      40% { transform: translate(3px, -2px); }
+      60% { transform: translate(-2px, 1px); }
+      80% { transform: translate(2px, -1px); }
+      100% { transform: translate(0); }
+    }
+
+    /* Aura + button container */
+    .aura-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInButton 2.8s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInButton {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Rotating hologram aura */
+    .aura {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: conic-gradient(
+        rgba(255, 0, 150, 0.4),
+        rgba(0, 200, 255, 0.4),
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 0, 150, 0.4)
+      );
+      filter: blur(35px);
+      animation: rotateAura 6s linear infinite;
+      z-index: -2;
+    }
+
+    @keyframes rotateAura {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Glassmorphism hologram button */
+    .btn {
+      padding: 20px 45px;
+      font-size: 22px;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25),
+                  0 0 25px rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 2;
+    }
+
+    /* Hologram gradient overlay */
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 0, 150, 0.4),
+        rgba(0, 200, 255, 0.4),
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 0, 150, 0.4)
+      );
+      background-size: 300% 300%;
+      animation: holoMove 5s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes holoMove {
+      0% { transform: translate(-50%, -50%); }
+      50% { transform: translate(0%, 0%); }
+      100% { transform: translate(-50%, -50%); }
+    }
+
+    .btn:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45),
+                  0 0 35px rgba(255, 255, 255, 0.45);
     }
   </style>
 </head>
 
 <body>
-  <a href="https://thunder-ai-ccfaa141.base44.app/" class="btn">Open Thunder AI</a>
+
+  <!-- Terminal Boot Text -->
+  <div id="terminal" class="glitch"></div>
+
+  <!-- Aura + Button -->
+  <div class="aura-container">
+    <div class="aura"></div>
+    <a href="https://thunder-ai-ccfaa141.base44.app/" class="btn">Open Thunder AI</a>
+  </div>
+
+  <script>
+    /* Terminal typing effect */
+    const terminal = document.getElementById("terminal");
+
+    const lines = [
+      "Initializing Thunder AI Systems...",
+      "Loading neural modules...",
+      "Establishing secure connection...",
+      "Boot sequence complete.",
+      "",
+      ">> System Ready"
+    ];
+
+    let index = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (index < lines.length) {
+        if (charIndex < lines[index].length) {
+          terminal.textContent += lines[index][charIndex];
+          charIndex++;
+          setTimeout(typeLine, 40);
+        } else {
+          terminal.textContent += "\n";
+          index++;
+          charIndex = 0;
+          setTimeout(typeLine, 150);
+        }
+      }
+    }
+
+    setTimeout(typeLine, 900);
+  </script>
+
 </body>
 </html>
